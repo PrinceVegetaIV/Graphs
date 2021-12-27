@@ -11,9 +11,8 @@ int kx[]={1,1,2,2,-1,-1,-2,-2};
 int ky[]={2,-2,1,-1,2,-2,1,-1}; //knight's move
 vector<int> graph[MAX];
 vector<int> cost[MAX];
-int A[N][N];
+int A[N][N]; //level
 bool vis[N][N];
-
 
 void printGraph(vector<int> graph[],int nod) {
 	for (int i=0;i<nod;i++) {
@@ -26,12 +25,38 @@ void printGraph(vector<int> graph[],int nod) {
 void DFS(int x,int y) {
 	vis[x][y]=1;
 	for (int i=0;i<8;i++) {
-		int nx=x+kx[i];
-		int ny=y+ky[i];
+		int nx=x+dx[i];
+		int ny=y+dy[i];
 		if (valid(nx,ny)) {
 			vis[nx][ny]=1;
 			DFS(nx,ny);
 		}
+	}
+}
+
+struct node {
+	int x;
+	int y;
+};
+
+void BFS(int sx,int sy) {
+	queue<node> Q;
+	Q.push({sx,sy});
+	vis[sx][sy]=1;
+	A[sx][sy]=0;
+	while (!Q.empty()) {
+		int x=Q.front().x;
+		int y=Q.front().y;
+		Q.pop();
+		for (int i=0;i<8;i++) {
+			int nx=x+kx[i];
+			int ny=y+ky[i];
+			if (valid(nx,ny)) {
+				Q.push({nx,ny});
+				vis[nx][ny]=1;
+				A[nx][ny]=A[x][y]+1;
+			}
+		} 
 	}
 }
 
@@ -42,9 +67,9 @@ void solve() {
 		graph[x].PB(y);
 		graph[y].PB(x);
 	} 
-	DFS(2,2);
+	BFS(2,2);
 	for(int i=0;i<N;i++) {
-		for (int j=0;j<N;j++) cout<<vis[i][j]<<" ";
+		for (int j=0;j<N;j++) cout<<A[i][j]<<" ";
 		cout<<endl;
 	}
 }
