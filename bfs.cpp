@@ -4,7 +4,6 @@ using namespace std;
 #define PB push_back
 #define MAX 100000 //maximum node
 vector<int> graph[MAX];
-vector<int> cost[MAX];
 int dis[MAX];
 int vis[MAX];
 
