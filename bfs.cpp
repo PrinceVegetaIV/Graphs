@@ -5,7 +5,7 @@ using namespace std;
 #define MAX 100000 //maximum node
 vector<int> graph[MAX];
 int dis[MAX];
-int vis[MAX];
+bool vis[MAX];
 
 void printGraph(vector<int> graph[],int nod) {
 	for (int i=0;i<=nod;i++) {
